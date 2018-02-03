@@ -21,7 +21,7 @@
     /* horizontal alignment */
     text-align:center;
     /* large text */
-    font-size:  xx-large;
+    font-size:  300%;
     /* text-shadow: 1px 1px gray;*/
     color: white;
     font-family: verdana;
@@ -211,7 +211,7 @@ var wordList = [
 "bubbelbad",
 "buffel",
 "buiten",
-"buldog",
+"bulldog",
 "bumba",
 "bureau",
 "bus",
@@ -1283,8 +1283,11 @@ var wordList = [
         function clickNewGuessWord(e) {
 			beep();
 			var newWord = selectNewWord();
+			// change the color 
+			document.getElementById("guess").style.color = getRandomLightColor();
+			// set the new word
             document.getElementById("guess").innerHTML = newWord;
-			updateWordCount(newWord);
+			updateWordTimestamps(newWord);
         }
 		
 		document.onclick = clickNewGuessWord;
@@ -1296,7 +1299,7 @@ function beep() {
 }
 
 // update the local storage with the new word.
-function updateWordCount(newWord) {
+function updateWordTimestamps(newWord) {
 	if (localStorage.wordLastTimestamp) {
 		// It already exists, but as a string in localStorage.
 		// Retrieve it, update it and store it again.
@@ -1363,6 +1366,17 @@ function selectNewWord() {
 	// then we can simply return any word
 	return wordList[Math.floor(Math.random()*wordList.length)];
 	
+}
+
+// Generate a random color, but only light colors (starting from D to F in hex)
+// Source: https://stackoverflow.com/questions/23601792/get-only-light-colors-randomly-using-javascript
+function getRandomLightColor() {
+    var letters = 'DEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * letters.length)];
+    }
+    return color;
 }
 
 
